@@ -1,13 +1,33 @@
 import React, { Component } from 'react'
 import { View, StyleSheet, Text } from 'react-native'
 import { purple, white } from '../utils/colors'
+import { connect } from 'react-redux'
+import { fetchDecks } from '../utils/api'
+import { receiveDecks } from '../actions'
+import { AppLoading } from 'expo'
 
-export default class DeckListView extends Component {
+class DeckListView extends Component {
+    state = {
+        ready: false,
+    }
+    componentDidMount () {
+        const { dispatch } = this.props
+
+        fetchDecks()
+            .then((decks) => dispatch(receiveDecks(decks)))
+            .then(() => this.setState(() => ({ready: true})))
+    }
+
+
     render() {
-
+        const { decks } = this.props
+        const { ready } = this.state
+        if (ready === false) {
+            return <AppLoading/>
+        }
         return (
             <View style={styles.container}>
-                <Text>Deck List View</Text>
+                <Text>Hello{console.log(decks)}</Text>
             </View>
         )
     }
@@ -20,3 +40,11 @@ const styles = StyleSheet.create({
         backgroundColor: white
     }
 })
+
+function mapStateToProps (decks) {
+    return {
+        decks
+    }
+}
+
+export default connect(mapStateToProps)(DeckListView)
