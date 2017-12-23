@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
-import { View, StyleSheet, Text } from 'react-native'
+import { View, StyleSheet, Text, Platform } from 'react-native'
 import { purple, white } from '../utils/colors'
 import { connect } from 'react-redux'
 import { fetchDecks } from '../utils/api'
 import { receiveDecks } from '../actions'
 import { AppLoading } from 'expo'
+import Deck from './Deck'
 
 class DeckListView extends Component {
     state = {
@@ -20,14 +21,14 @@ class DeckListView extends Component {
 
 
     render() {
-        const { decks } = this.props
         const { ready } = this.state
         if (ready === false) {
             return <AppLoading/>
         }
         return (
             <View style={styles.container}>
-                <Text>Hello{console.log(decks)}</Text>
+                <Text style={{color: purple, fontSize: 25}}>Decks</Text>
+                <Deck navigation={this.props.navigation} />
             </View>
         )
     }
@@ -38,7 +39,7 @@ const styles = StyleSheet.create({
         flex: 1,
         padding: 20,
         backgroundColor: white
-    }
+    },
 })
 
 function mapStateToProps (decks) {
