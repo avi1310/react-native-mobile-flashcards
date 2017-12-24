@@ -19,8 +19,8 @@ class DeckView extends Component {
                     <Text style={styles.cardsNo}>{deck.questions.length} Card(s)</Text>
                 </View>
                 <View style={styles.buttonsContainer}>
-                    <TouchableOpacity><Button title="Add Cards" onPress={console.log("press")}/></TouchableOpacity>
-                    <TouchableOpacity><Button title="Start Quiz" onPress={console.log("press")}/></TouchableOpacity>
+                    <TouchableOpacity><Button title="Add Cards" onPress={() => (console.log("hello"))}/></TouchableOpacity>
+                    <TouchableOpacity><Button title="Start Quiz" onPress={() => (console.log("hello"))}/></TouchableOpacity>
                 </View>
             </View>
         )

@@ -27,6 +27,7 @@ class DeckListView extends Component {
         }
         return (
             <View style={styles.container}>
+                {console.log(this.props)}
                 <Text style={{color: purple, fontSize: 25}}>Decks</Text>
                 <Deck navigation={this.props.navigation} />
             </View>

@@ -69,10 +69,12 @@ const MainNavigator = StackNavigator({
     }
 })
 
+const store = createStore(reducer)
+
 export default class App extends React.Component {
   render() {
     return (
-        <Provider store={createStore(reducer)}>
+        <Provider store={store}>
             <View style={{flex: 1}}>
                 <AppStatusBar backgroundColor={purple} barStyle="light-content" />
                 <MainNavigator/>
