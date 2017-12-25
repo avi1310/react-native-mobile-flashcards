@@ -10,6 +10,7 @@ import { purple, white } from './utils/colors'
 import { FontAwesome, Ionicons, MaterialCommunityIcons} from '@expo/vector-icons'
 import { Constants } from 'expo'
 import DeckView from './components/DeckView'
+import NewQuestionView from './components/NewQuestionView'
 
 function AppStatusBar({backgroundColor, ...props}) {
     return (
@@ -60,6 +61,15 @@ const MainNavigator = StackNavigator({
     },
     DeckView: {
         screen: DeckView,
+        navigationOptions: {
+            headerTintColor: white,
+            headerStyle: {
+                backgroundColor: purple,
+            }
+        }
+    },
+    NewQuestionView: {
+        screen: NewQuestionView,
         navigationOptions: {
             headerTintColor: white,
             headerStyle: {

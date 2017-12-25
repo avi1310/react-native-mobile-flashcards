@@ -3,44 +3,53 @@ import { View, StyleSheet, Text, TouchableOpacity } from 'react-native'
 import { purple, white, black } from '../utils/colors'
 import { Container, Header, Content, Form, Item, Input, Label } from 'native-base';
 import { connect } from 'react-redux'
-import { addDeck } from '../actions'
-import { addDeckAPI } from '../utils/api'
+import { addCard } from '../actions'
+import { addCardAPI } from '../utils/api'
 
-class NewDeckView extends Component {
+class NewQuestionView extends Component {
     state = {
-        title: '',
+        question: '',
+        answer: ''
     }
 
     submit = () => {
 
-        const key = this.state.title
+        const { title } = this.props
+        const newDecks = this.props.decks
+        const question = this.state.question
+        const answer = this.state.answer
         const entry = {
-            title: key,
-            questions: []
+            question,
+            answer
         }
-        this.props.dispatch(addDeck({
-            [key]: entry
-        }))
 
-        this.setState({title: '' })
-        addDeckAPI({ key, entry })
+        this.props.dispatch(addCard(entry, title))
+
+        newDecks[title]["questions"].push(entry)
+
+        addCardAPI(newDecks)
+
+        this.setState({question: '', answer: ''})
+        this.props.navigation.goBack()
     }
 
     render() {
 
         return (
             <View style={styles.container}>
-                <Text style={{color: purple, fontSize: 25}}>New Deck</Text>
+                <Text style={{color: purple, fontSize: 25}}>New Question</Text>
                 <Container style={styles.formContainer}>
                     <Content>
                         <Form>
-                            <Text style={styles.inputHeader}>What is the title of your new deck?</Text>
                             <Item>
-                                <Input placeholder="Deck Title" value={this.state.title} onChangeText={(text) => this.setState({title: text})} />
+                                <Input placeholder="Enter Question" value={this.state.question} onChangeText={(text) => this.setState({question: text})} />
+                            </Item>
+                            <Item>
+                                <Input placeholder="Enter Answer" value={this.state.answer} onChangeText={(text) => this.setState({answer: text})} />
                             </Item>
                         </Form>
                         <TouchableOpacity style={styles.iosSubmitBtn} onPress={this.submit}>
-                            <Text style={styles.submitBtnText}>Add Deck</Text>
+                            <Text style={styles.submitBtnText}>Submit</Text>
                         </TouchableOpacity>
                     </Content>
                 </Container>
@@ -88,10 +97,13 @@ const styles = StyleSheet.create({
     }
 })
 
-function mapStateToProps (decks) {
+function mapStateToProps (decks, { navigation }) {
+    const { title } = navigation.state.params
     return {
+        deck: decks[title],
+        title,
         decks
     }
 }
 
-export default connect(mapStateToProps)(NewDeckView)
+export default connect(mapStateToProps)(NewQuestionView)

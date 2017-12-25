@@ -1,6 +1,7 @@
 import {
     RECEIVE_DECKS,
-    ADD_DECK
+    ADD_DECK,
+    ADD_CARD
 } from '../actions'
 
 function decks (state = {}, action) {
@@ -14,6 +15,14 @@ function decks (state = {}, action) {
             return {
                 ...state,
                 ...action.deck
+            }
+        case ADD_CARD:
+            return {
+                ...state,
+                [action.title]: {
+                    ...state[action.title],
+                    questions: [...state[action.title].questions, action.card]
+                }
             }
         default:
             return state;

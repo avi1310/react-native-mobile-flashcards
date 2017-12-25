@@ -11,3 +11,8 @@ export function addDeckAPI ({ entry, key }) {
         [key]: entry
     }))
 }
+
+export function addCardAPI (newDecks) {
+    return AsyncStorage.removeItem(DECKS_STORAGE_KEY)
+        .then(AsyncStorage.setItem(DECKS_STORAGE_KEY, JSON.stringify(newDecks)))
+}
