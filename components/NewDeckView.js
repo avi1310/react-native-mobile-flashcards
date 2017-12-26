@@ -9,6 +9,7 @@ import { addDeckAPI } from '../utils/api'
 class NewDeckView extends Component {
     state = {
         title: '',
+        titleValid: false
     }
 
     submit = () => {
@@ -18,16 +19,34 @@ class NewDeckView extends Component {
             title: key,
             questions: []
         }
-        this.props.dispatch(addDeck({
-            [key]: entry
-        }))
 
-        this.setState({title: '' })
-        addDeckAPI({ key, entry })
-        this.props.navigation.navigate(
-            'DeckView',
-            { title: key }
-        )
+        const valid = this.state.titleValid
+
+        if(valid) {
+            this.props.dispatch(addDeck({
+                [key]: entry
+            }))
+            this.setState({title: '', titleValid: false })
+            addDeckAPI({ key, entry })
+            this.props.navigation.navigate(
+                'DeckView',
+                { title: key }
+            )
+        }
+    }
+    handleTitleChange = (title) => {
+        if(title) {
+            this.setState({
+                title,
+                titleValid: true
+            })
+        }
+        else {
+            this.setState({
+                title,
+                titleValid: false
+            })
+        }
     }
 
     render() {
@@ -39,8 +58,8 @@ class NewDeckView extends Component {
                     <Content>
                         <Form>
                             <Text style={styles.inputHeader}>What is the title of your new deck?</Text>
-                            <Item>
-                                <Input placeholder="Deck Title" value={this.state.title} onChangeText={(text) => this.setState({title: text})} />
+                            <Item success={this.state.titleValid} error={!this.state.titleValid}>
+                                <Input placeholder="Deck Title" value={this.state.title} onChangeText={(text) => this.handleTitleChange(text)} />
                             </Item>
                         </Form>
                         <TouchableOpacity style={styles.iosSubmitBtn} onPress={this.submit}>

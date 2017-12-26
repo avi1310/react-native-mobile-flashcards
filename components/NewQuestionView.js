@@ -9,7 +9,9 @@ import { addCardAPI } from '../utils/api'
 class NewQuestionView extends Component {
     state = {
         question: '',
-        answer: ''
+        answer: '',
+        questionValid: false,
+        answerValid: false
     }
 
     submit = () => {
@@ -23,14 +25,46 @@ class NewQuestionView extends Component {
             answer
         }
 
-        this.props.dispatch(addCard(entry, title))
+        const valid = this.state.questionValid && this.state.answerValid
 
-        newDecks[title]["questions"].push(entry)
+        if(valid) {
+            this.props.dispatch(addCard(entry, title))
 
-        addCardAPI(newDecks)
+            newDecks[title]["questions"].push(entry)
 
-        this.setState({question: '', answer: ''})
-        this.props.navigation.goBack()
+            addCardAPI(newDecks)
+
+            this.setState({question: '', answer: '', questionValid: false, answerValid: false})
+            this.props.navigation.goBack()
+        }
+    }
+    handleQuestionChange = (question) => {
+        if(question) {
+            this.setState({
+                question,
+                questionValid: true
+            })
+        }
+        else {
+            this.setState({
+                question,
+                questionValid: false
+            })
+        }
+    }
+    handleAnswerChange = (answer) => {
+        if(answer) {
+            this.setState({
+                answer,
+                answerValid: true
+            })
+        }
+        else {
+            this.setState({
+                answer,
+                answerValid: false
+            })
+        }
     }
 
     render() {
@@ -41,11 +75,11 @@ class NewQuestionView extends Component {
                 <Container style={styles.formContainer}>
                     <Content>
                         <Form>
-                            <Item>
-                                <Input placeholder="Enter Question" value={this.state.question} onChangeText={(text) => this.setState({question: text})} />
+                            <Item success={this.state.questionValid} error={!this.state.questionValid}>
+                                <Input placeholder="Enter Question" value={this.state.question} onChangeText={(text) => this.handleQuestionChange(text)} />
                             </Item>
-                            <Item>
-                                <Input placeholder="Enter Answer" value={this.state.answer} onChangeText={(text) => this.setState({answer: text})} />
+                            <Item success={this.state.answerValid} error={!this.state.answerValid}>
+                                <Input placeholder="Enter Answer" value={this.state.answer} onChangeText={(text) => this.handleAnswerChange(text)} />
                             </Item>
                         </Form>
                         <TouchableOpacity style={styles.iosSubmitBtn} onPress={this.submit}>
