@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, StyleSheet, Text, Platform } from 'react-native'
+import { View, StyleSheet, Text, ScrollView } from 'react-native'
 import { purple, white } from '../utils/colors'
 import { connect } from 'react-redux'
 import { fetchDecks } from '../utils/api'
@@ -26,10 +26,10 @@ class DeckListView extends Component {
             return <AppLoading/>
         }
         return (
-            <View style={styles.container}>
+            <ScrollView style={styles.container}>
                 <Text style={{color: purple, fontSize: 25}}>Decks</Text>
                 <Deck navigation={this.props.navigation} />
-            </View>
+            </ScrollView>
         )
     }
 }
