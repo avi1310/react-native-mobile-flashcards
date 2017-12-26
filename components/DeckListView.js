@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, StyleSheet, Text, ScrollView } from 'react-native'
+import { StyleSheet, Text, ScrollView } from 'react-native'
 import { purple, white } from '../utils/colors'
 import { connect } from 'react-redux'
 import { fetchDecks } from '../utils/api'

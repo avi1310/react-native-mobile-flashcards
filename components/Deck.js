@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import { View, StyleSheet, Text, Platform, TouchableOpacity } from 'react-native'
-import { purple, white, black } from '../utils/colors'
+import { StyleSheet, Text, Platform, TouchableOpacity } from 'react-native'
+import { purple, white } from '../utils/colors'
 import { connect } from 'react-redux'
 
 class Deck extends Component {

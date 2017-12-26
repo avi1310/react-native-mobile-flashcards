@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Platform, StatusBar } from 'react-native';
+import { View, Platform, StatusBar } from 'react-native';
 import DeckListView from './components/DeckListView'
 import NewDeckView from './components/NewDeckView'
 import reducer from './reducers'
