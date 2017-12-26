@@ -1,10 +1,8 @@
 import React, { Component } from 'react'
-import { View, StyleSheet, Text, Platform, TouchableOpacity, Button } from 'react-native'
+import { View, StyleSheet, Text, Platform, TouchableOpacity, Button, Animated } from 'react-native'
 import { purple, white, red, green } from '../utils/colors'
 import { connect } from 'react-redux'
 import { fetchDecks } from '../utils/api'
-import { receiveDecks } from '../actions'
-
 
 class QuizView extends Component {
     state = {
@@ -14,6 +12,12 @@ class QuizView extends Component {
         notEmpty: this.props.notEmpty,
         question: '',
         correct: 0,
+        height1: new Animated.Value(261.3),
+        width1: new Animated.Value(315),
+        opacity1: new Animated.Value(1),
+        opacity2: new Animated.Value(0),
+        height2: new Animated.Value(0),
+        width2: new Animated.Value(0)
     }
     static navigationOptions = () => {
         return {
@@ -78,6 +82,34 @@ class QuizView extends Component {
             }
         )
     }
+    showAnswer = () => {
+        const width1 = this.state.width1
+        const height1 = this.state.height1
+        const opacity1 = this.state.opacity1
+        const opacity2 = this.state.opacity2
+        const width2 = this.state.width2
+        const height2 = this.state.height2
+        Animated.timing(width1, { toValue: 0, duration: 1000}).start()
+        Animated.timing(height1, { toValue: 0, duration: 1000}).start()
+        Animated.timing(opacity1, { toValue: 0, duration: 100 }).start()
+        Animated.timing(opacity2, { toValue: 1, duration: 1000 }).start()
+        Animated.timing(width2, { toValue: 315, duration: 1000}).start()
+        Animated.timing(height2, { toValue: 142, duration: 1000}).start()
+    }
+    showQuestion = () => {
+        const width1 = this.state.width1
+        const height1 = this.state.height1
+        const opacity1 = this.state.opacity1
+        const opacity2 = this.state.opacity2
+        const width2 = this.state.width2
+        const height2 = this.state.height2
+        Animated.timing(width1, { toValue: 315, duration: 100}).start()
+        Animated.timing(height1, { toValue: 261.3, duration: 100}).start()
+        Animated.timing(opacity1, { toValue: 1, duration: 1000 }).start()
+        Animated.timing(opacity2, { toValue: 0, duration: 100 }).start()
+        Animated.timing(width2, { toValue: 0, duration: 1000}).start()
+        Animated.timing(height2, { toValue: 0, duration: 1000}).start()
+    }
 
 
 
@@ -91,11 +123,11 @@ class QuizView extends Component {
                 <View style={styles.container}>
                     <Text style={{color: purple, fontSize: 25}}>Quiz</Text>
                     {notEmpty && (
-                        <View
-                            style={styles.item}>
+                        <Animated.View
+                            style={[styles.item, { height: this.state.height1, width: this.state.width1, opacity: this.state.opacity1 }]}>
                             <Text>{`${items}/${totalQuestions}`}</Text>
-                            <Text style={styles.title}>{question.question}</Text>
-                            <Text style={styles.info}>{items}</Text>
+                            <Text style={styles.title}>Q. {question.question}</Text>
+                            <Button title="Show Answer" onPress={this.showAnswer} style={{textAlign: 'left'}}/>
                             <TouchableOpacity
                                 style={[styles.iosSubmitBtn, {backgroundColor: green }]}
                                 onPress={this.correctHandle}>
@@ -106,7 +138,16 @@ class QuizView extends Component {
                                 onPress={this.wrongHandle}>
                                 <Text style={styles.submitBtnText}>Incorrect</Text>
                             </TouchableOpacity>
-                        </View>
+                        </Animated.View>
+                    )}
+                    {notEmpty && (
+                        <Animated.View
+                            style={[styles.item, { opacity: this.state.opacity2 }]}>
+                            <Text style={styles.title}>Answer:</Text>
+                            <Text style={styles.info}>{question.answer}</Text>
+                            <Button title="Show Question" onPress={this.showQuestion} style={{textAlign: 'left'}}/>
+
+                        </Animated.View>
                     )}
                     {!notEmpty && (
                         <View style={styles.itemComplete}>
