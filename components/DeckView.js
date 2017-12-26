@@ -2,12 +2,17 @@ import React, { Component } from 'react'
 import { View, Text, StyleSheet, TouchableOpacity, Button } from 'react-native'
 import { connect } from 'react-redux'
 import { white, black, purple } from '../utils/colors'
+import { Ionicons } from '@expo/vector-icons'
+
 
 class DeckView extends Component {
     static navigationOptions = ({ navigation }) => {
         const { title } = navigation.state.params
         return {
-            title
+            title,
+            headerLeft: <Ionicons name="ios-arrow-back-outline"
+                                  style={{color: white, fontSize: 25, padding: 20, paddingBottom: 10}}
+                                      onPress={ () => navigation.navigate("Home")}/>
         }
     }
     render() {
