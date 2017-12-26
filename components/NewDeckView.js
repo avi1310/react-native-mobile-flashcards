@@ -24,6 +24,10 @@ class NewDeckView extends Component {
 
         this.setState({title: '' })
         addDeckAPI({ key, entry })
+        this.props.navigation.navigate(
+            'DeckView',
+            { title: key }
+        )
     }
 
     render() {
@@ -40,7 +44,7 @@ class NewDeckView extends Component {
                             </Item>
                         </Form>
                         <TouchableOpacity style={styles.iosSubmitBtn} onPress={this.submit}>
-                            <Text style={styles.submitBtnText}>Add Deck</Text>
+                            <Text style={styles.submitBtnText}>Create Deck</Text>
                         </TouchableOpacity>
                     </Content>
                 </Container>
