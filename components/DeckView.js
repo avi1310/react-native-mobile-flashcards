@@ -25,7 +25,7 @@ class DeckView extends Component {
                 </View>
                 <View style={styles.buttonsContainer}>
                     <TouchableOpacity>
-                        <Button title="Add Cards" onPress={() => this.props.navigation.navigate(
+                        <Button title="Create New Question" onPress={() => this.props.navigation.navigate(
                             'NewQuestionView',
                             {title: deck.title}
                         )}/>
@@ -64,6 +64,7 @@ const styles = StyleSheet.create({
     buttonsContainer: {
         flex: 1,
         justifyContent: 'flex-start',
+        alignItems: 'center'
     },
     cardsNo: {
         fontSize: 30,
