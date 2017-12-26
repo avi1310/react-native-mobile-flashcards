@@ -11,6 +11,7 @@ import { FontAwesome, Ionicons, MaterialCommunityIcons} from '@expo/vector-icons
 import { Constants } from 'expo'
 import DeckView from './components/DeckView'
 import NewQuestionView from './components/NewQuestionView'
+import QuizView from './components/QuizView'
 
 function AppStatusBar({backgroundColor, ...props}) {
     return (
@@ -76,21 +77,30 @@ const MainNavigator = StackNavigator({
                 backgroundColor: purple,
             }
         }
+    },
+    QuizView: {
+        screen: QuizView,
+        navigationOptions: {
+            headerTintColor: white,
+            headerStyle: {
+                backgroundColor: purple,
+            }
+        }
     }
 })
 
 const store = createStore(reducer)
 
 export default class App extends React.Component {
-  render() {
-    return (
-        <Provider store={store}>
-            <View style={{flex: 1}}>
-                <AppStatusBar backgroundColor={purple} barStyle="light-content" />
-                <MainNavigator/>
-            </View>
-        </Provider>
-    );
-  }
+    render() {
+        return (
+            <Provider store={store}>
+                <View style={{flex: 1}}>
+                    <AppStatusBar backgroundColor={purple} barStyle="light-content" />
+                    <MainNavigator/>
+                </View>
+            </Provider>
+        );
+    }
 }
 

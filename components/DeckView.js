@@ -21,11 +21,17 @@ class DeckView extends Component {
                 <View style={styles.buttonsContainer}>
                     <TouchableOpacity>
                         <Button title="Add Cards" onPress={() => this.props.navigation.navigate(
-                        'NewQuestionView',
+                            'NewQuestionView',
                             {title: deck.title}
                         )}/>
                     </TouchableOpacity>
-                    <TouchableOpacity><Button title="Start Quiz" onPress={() => (console.log("hello"))}/></TouchableOpacity>
+                    {deck.questions.length > 0 ? (
+                        <TouchableOpacity><Button title="Start Quiz" onPress={() => this.props.navigation.navigate(
+                            'QuizView',
+                            {title: deck.title}
+                        )}/>
+                        </TouchableOpacity>
+                    ): (<Text>No cards to start quiz</Text>)}
                 </View>
             </View>
         )
