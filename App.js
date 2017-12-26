@@ -12,6 +12,7 @@ import { Constants } from 'expo'
 import DeckView from './components/DeckView'
 import NewQuestionView from './components/NewQuestionView'
 import QuizView from './components/QuizView'
+import { setLocalNotification } from './utils/helpers'
 
 function AppStatusBar({backgroundColor, ...props}) {
     return (
@@ -92,6 +93,9 @@ const MainNavigator = StackNavigator({
 const store = createStore(reducer)
 
 export default class App extends React.Component {
+    componentDidMount() {
+        setLocalNotification()
+    }
     render() {
         return (
             <Provider store={store}>

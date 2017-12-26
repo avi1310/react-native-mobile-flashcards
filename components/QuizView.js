@@ -3,6 +3,7 @@ import { View, StyleSheet, Text, Platform, TouchableOpacity, Button, Animated } 
 import { purple, white, red, green } from '../utils/colors'
 import { connect } from 'react-redux'
 import { fetchDecks } from '../utils/api'
+import { clearLocalNotification, setLocalNotification } from '../utils/helpers'
 
 class QuizView extends Component {
     state = {
@@ -35,6 +36,8 @@ class QuizView extends Component {
             this.setState({question})
             }
         )
+        clearLocalNotification()
+            .then(setLocalNotification)
     }
     correctHandle = () => {
         const questions = this.state.questions
